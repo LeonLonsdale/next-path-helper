@@ -102,6 +102,17 @@ pathManager.addNav(key: string, ...navs: string[]): void
 - `key`: The key of the path.
 - `navs`: The navigation links to add.
 
+#### addPathsToNav
+
+```typescript
+pathManager.addPathsToNav(keys: string[], nav: string): void
+```
+
+- `keys`: An array of path keys.
+- `nav`: The navigation link to add.
+
+This function finds each path by its key and adds the specified nav link to each paths navs array. If a path key does not exist, an error message is logged.
+
 #### removeNav
 
 Removes a navigation link from a path.
