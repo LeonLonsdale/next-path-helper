@@ -229,7 +229,7 @@ export class PathManager {
   }
 
   /**
-   * Adds navigation links to a path.
+   * Adds unique navigation links to a path.
    * @param key - The key of the path.
    * @param navs - The navigation links to add.
    */
@@ -237,7 +237,11 @@ export class PathManager {
     const pathInfo = this.paths[key];
 
     if (pathInfo) {
-      pathInfo.navs.push(...navs);
+      navs.forEach((nav) => {
+        if (!pathInfo.navs.includes(nav)) {
+          pathInfo.navs.push(nav);
+        }
+      });
     } else {
       console.error(`Path '${key}' not found.`);
     }
