@@ -248,6 +248,24 @@ export class PathManager {
   }
 
   /**
+   * Removes navigation links from a path.
+   * @param key - The key of the path.
+   * @param nav - The navigation link to remove.
+   */
+  public removeNav(key: string, nav: string): void {
+    const pathInfo = this.paths[key];
+
+    if (pathInfo) {
+      const index = pathInfo.navs.indexOf(nav);
+      if (index > -1) {
+        pathInfo.navs.splice(index, 1);
+      }
+    } else {
+      console.error(`Path '${key}' not found.`);
+    }
+  }
+
+  /**
    * Retrieves a list of navigation links that match a keyword.
    * @param keyword - The keyword to match.
    * @returns The list of matching navigation links.
