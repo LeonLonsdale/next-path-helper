@@ -260,6 +260,24 @@ export class PathManager {
   }
 
   /**
+   * Adds a navigation link to multiple paths.
+   * @param keys - An array of path keys.
+   * @param nav - The navigation link to add.
+   */
+  public addPathsToNav(keys: string[], nav: string): void {
+    keys.forEach((key) => {
+      const pathInfo = this.paths[key];
+      if (pathInfo) {
+        if (!pathInfo.navs.includes(nav)) {
+          pathInfo.navs.push(nav);
+        }
+      } else {
+        console.error(`Path '${key}' not found.`);
+      }
+    });
+  }
+
+  /**
    * Removes navigation links from a path.
    * @param key - The key of the path.
    * @param nav - The navigation link to remove.
