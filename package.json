@@ -1,6 +1,6 @@
 {
   "name": "next-path-helper",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Helper utility for managing paths in NextJS projects using app router",
   "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
@@ -9,6 +9,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
+    "watch": "node dist/utils/watch.js",
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
@@ -32,5 +33,9 @@
   "bugs": {
     "url": "https://github.com/LeonLonsdale/next-path-helper/issues"
   },
-  "homepage": "hhttps://github.com/LeonLonsdale/next-path-helper#readme"
+  "homepage": "hhttps://github.com/LeonLonsdale/next-path-helper#readme",
+  "dependencies": {
+    "chokidar": "^3.6.0",
+    "npm-run-all": "^4.1.5"
+  }
 }

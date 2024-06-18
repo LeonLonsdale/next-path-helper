@@ -161,6 +161,42 @@ pathManager.removeNav("examplePath", "sidebar");
 console.log("Updated Path Info:", pathManager.getPath("examplePath"));
 ```
 
+### Watching for Changes
+
+By default, if you add directories after generating the path list, these new paths will not be detected without restarting your dev server.
+
+We provide a watch script to save you from having to do this, but there's a little work to do to get this working - we don't want to just run background scripts by default.
+
+To get your watch script working:
+
+1. Create a file somewhere within your project. The top level would be easier, outside of your project, along with your config files. Call it `watch.js`.
+2. Add the following code to your `watch.js` file:
+
+```typescript
+import { startWatcher } from "next-path-helper";
+
+if (process.env.NODE_ENV !== "production") {
+  startWatcher();
+} else {
+  console.log("Watcher not started in production environment");
+}
+```
+
+3. Add a watch script to your package.json
+
+```json
+"watch": "node watch.js"
+```
+
+4. Now you have 2 options, you can either:
+
+- Open a second terminal and run `npm run watch`
+- Or you can update the next dev script:
+
+```json
+"dev": "npm-run-all --parallel dev:next watch",
+```
+
 ## License
 
 This project is licensed under the MIT License.

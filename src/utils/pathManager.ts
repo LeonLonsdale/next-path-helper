@@ -100,7 +100,10 @@ export class PathManager {
   ): { key: string; label: string } {
     const segments = relativePath
       .split("/")
-      .filter((segment) => segment !== "");
+      .filter(
+        (segment) =>
+          segment !== "" && !segment.startsWith("(") && !segment.endsWith(")")
+      );
     const lastSegment = segments[segments.length - 1];
 
     if (this.isDynamicPath(lastSegment)) {
@@ -202,6 +205,15 @@ export class PathManager {
     });
   }
 
+  public getAppDir(): string | boolean {
+    const appDirPath = this.locateAppDir(this.getProjectRoot());
+    if (appDirPath) {
+      return appDirPath;
+    } else {
+      return false;
+    }
+  }
+
   /**
    * Adds a path to the path manager.
    * @param key - The key for the path.
@@ -293,6 +305,7 @@ export class PathManager {
       console.log("App router detected", appDirPath);
       console.log("Paths have been generated");
       console.log("Ensure you read the docs for more information");
+      console.log(this.getPaths());
     } else {
       console.error(
         "App directory not found in the project root:",
