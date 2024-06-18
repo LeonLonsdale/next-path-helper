@@ -8,7 +8,8 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "@types/node": "^20.14.5",
@@ -22,6 +23,14 @@
     "path-helper",
     "utility"
   ],
-  "author": "",
-  "license": "ISC"
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LeonLonsdale/next-path-helper"
+  },
+  "bugs": {
+    "url": "https://github.com/LeonLonsdale/next-path-helper/issues"
+  },
+  "homepage": "hhttps://github.com/LeonLonsdale/next-path-helper#readme"
 }
