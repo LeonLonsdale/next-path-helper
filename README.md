@@ -2,15 +2,15 @@
 
 When we build a modern web app, it's common for us to end up with a lot of routes. Throughout our projects we implement links to those routes. When we need to change a route, however, updating each place in which we've created a link can be a frustrating process.
 
-Path Manager aims to make this easier in your NextJS Apps using the App Router. That's right **this does not work with the NextJS pages router**. Path Manager will identify your app router directlory and generate a central cach of all your route paths. These are stored in the following format:
+Path Manager aims to make this easier in your NextJS Apps using the App Router. That's right **this does not work with the NextJS pages router**. Path Manager will identify your app router directory and generate a central cache of all your route paths. These are stored in the following format:
 
 ```typescript
 {
-  label: string // labels can be used as the display text for your links
-  path: (...args: (string | number)[]: string // returns the path to your route. Accepts arguments for dynamic routes, such as id references or slugs.
-  type: 'static' | 'dynamic' // used internally to generate names and path generation
-  group: string // recognises group dirs like (auth) and ignores, but makes a record.
-  navs: string[] // allows you to label paths according to nav lists you use. These nav lists can be generated via the API later.
+  label: string; // labels can be used as the display text for your links
+  path: (...args: (string | number)[]) => string; // returns the path to your route. Accepts arguments for dynamic routes, such as id references or slugs.
+  type: 'static' | 'dynamic'; // used internally to generate names and path generation
+  group?: string; // recognises group dirs like (auth) and ignores, but makes a record.
+  navs: string[]; // allows you to label paths according to nav lists you use. These nav lists can be generated via the API later.
 }
 ```
 
@@ -24,6 +24,7 @@ Path Manager aims to make this easier in your NextJS Apps using the App Router. 
     - [getPath](#getpath)
     - [getPaths](#getpaths)
     - [addNav](#addnav)
+    - [removeNav](#removenav)
     - [getNavList](#getnavlist)
     - [buildPathList](#buildpathlist)
 
@@ -32,13 +33,13 @@ Path Manager aims to make this easier in your NextJS Apps using the App Router. 
 To install the package, you can use npm or yarn:
 
 ```bash
-npm i path-manager
+npm i next-path-helper
 ```
 
 or
 
 ```bash
-yarn add path-manager
+yarn add next-path-helper
 ```
 
 ## Usage
@@ -101,6 +102,17 @@ pathManager.addNav(key: string, ...navs: string[]): void
 - `key`: The key of the path.
 - `navs`: The navigation links to add.
 
+#### removeNav
+
+Removes a navigation link from a path.
+
+```typescript
+pathManager.removeNav(key: string, nav: string): void
+```
+
+- `key`: The key of the path.
+- `nav`: The navigation link to remove.
+
 #### getNavList
 
 Retrieves a list of navigation links that match a keyword.
@@ -143,6 +155,10 @@ console.log("All Paths:", allPaths);
 // Get paths with 'mainnav' in their navs array
 const mainNavItems = pathManager.getNavList("mainnav");
 console.log('Paths with "mainnav" in navs:', mainNavItems);
+
+// Remove navigation item from the path
+pathManager.removeNav("examplePath", "sidebar");
+console.log("Updated Path Info:", pathManager.getPath("examplePath"));
 ```
 
 ## License
