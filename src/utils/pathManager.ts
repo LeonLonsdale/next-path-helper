@@ -323,7 +323,6 @@ export class PathManager {
       console.log("App router detected", appDirPath);
       console.log("Paths have been generated");
       console.log("Ensure you read the docs for more information");
-      console.log(this.getPaths());
     } else {
       console.error(
         "App directory not found in the project root:",
