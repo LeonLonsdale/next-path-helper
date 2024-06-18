@@ -220,6 +220,58 @@ export class PathManager {
    * @param pathInfo - The information about the path.
    */
   public addPath(key: string, pathInfo: PathInfo): void {
+    // Check if the path already exists
+    if (this.paths[key]) {
+      throw new Error(`Path '${key}' already exists.`);
+    }
+
+    // Validate the pathInfo object
+    if (typeof pathInfo.label !== "string") {
+      throw new Error(`Invalid pathInfo object: 'label' should be a string.`);
+    }
+    if (typeof pathInfo.path !== "function") {
+      throw new Error(`Invalid pathInfo object: 'path' should be a function.`);
+    }
+    if (!Array.isArray(pathInfo.navs)) {
+      throw new Error(`Invalid pathInfo object: 'navs' should be an array.`);
+    }
+    if (pathInfo.group && typeof pathInfo.group !== "string") {
+      throw new Error(`Invalid pathInfo object: 'group' should be a string.`);
+    }
+    if (pathInfo.type !== "static" && pathInfo.type !== "dynamic") {
+      throw new Error(
+        `Invalid pathInfo object: 'type' should be either 'static' or 'dynamic'.`
+      );
+    }
+
+    this.paths[key] = pathInfo;
+  }
+
+  /**
+   * Updates an existing path in the path manager.
+   * @param key - The key for the path.
+   * @param pathInfo - The new information about the path.
+   */
+  public updatePath(key: string, pathInfo: PathInfo): void {
+    // Validate the pathInfo object
+    if (typeof pathInfo.label !== "string") {
+      throw new Error(`Invalid pathInfo object: 'label' should be a string.`);
+    }
+    if (typeof pathInfo.path !== "function") {
+      throw new Error(`Invalid pathInfo object: 'path' should be a function.`);
+    }
+    if (!Array.isArray(pathInfo.navs)) {
+      throw new Error(`Invalid pathInfo object: 'navs' should be an array.`);
+    }
+    if (pathInfo.group && typeof pathInfo.group !== "string") {
+      throw new Error(`Invalid pathInfo object: 'group' should be a string.`);
+    }
+    if (pathInfo.type !== "static" && pathInfo.type !== "dynamic") {
+      throw new Error(
+        `Invalid pathInfo object: 'type' should be either 'static' or 'dynamic'.`
+      );
+    }
+
     this.paths[key] = pathInfo;
   }
 
