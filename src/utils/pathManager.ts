@@ -15,7 +15,7 @@ export interface PathInfo {
 /**
  * Represents a navigation link.
  */
-type NavLink = {
+export type NavLink = {
   label: string;
   path: (...args: (string | number)[]) => string;
 };
