@@ -1,0 +1,9 @@
+# Ignore everything by default
+*
+
+# Include specific files and directories
+!dist/
+!types/
+!package.json
+!README.md
+!LICENSE
