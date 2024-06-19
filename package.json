@@ -1,9 +1,9 @@
 {
   "name": "next-path-helper",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Helper utility for managing paths in NextJS projects using app router",
   "main": "dist/index.js",
-  "types": "dist/types/index.d.ts",
+  "types": "types/index.d.ts",
   "module": "dist/index.js",
   "type": "module",
   "scripts": {
@@ -32,7 +32,7 @@
     "path-helper",
     "utility"
   ],
-  "author": "Your Name",
+  "author": "Leon Lonsdale",
   "license": "MIT",
   "repository": {
     "type": "git",
