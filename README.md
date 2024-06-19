@@ -27,6 +27,7 @@ Path Manager aims to make this easier in your NextJS Apps using the App Router. 
     - [removeNav](#removenav)
     - [getNavList](#getnavlist)
     - [buildPathList](#buildpathlist)
+- [Watcher](#watching-for-changes)
 
 ## Installation
 
@@ -68,6 +69,17 @@ Adds a path to the path manager. You shouldn't need this.
 
 ```typescript
 pathManager.addPath(key: string, pathInfo: PathInfo): void
+```
+
+- `key`: The key for the path.
+- `pathInfo`: The information about the path.
+
+#### updatePath
+
+Updates an existing path. If you're using watcher, this will be done automatically.
+
+```typescript
+pathManager.updatePath(key: string, pathInfo: PathInfo): void
 ```
 
 - `key`: The key for the path.
@@ -172,7 +184,7 @@ pathManager.removeNav("examplePath", "sidebar");
 console.log("Updated Path Info:", pathManager.getPath("examplePath"));
 ```
 
-### Watching for Changes
+## Watching for Changes
 
 By default, if you add directories after generating the path list, these new paths will not be detected without restarting your dev server.
 
@@ -181,13 +193,13 @@ We provide a watch script to save you from having to do this, but there's a litt
 To get your watch script working:
 
 1. Create a file somewhere within your project. The top level would be easier, outside of your project, along with your config files. Call it `watch.js`.
-2. Add the following code to your `watch.js` file:
+2. Add the following code to your `watch.js` file (note: you may have to set type to module in package.json):
 
 ```typescript
-import { startWatcher } from "next-path-helper";
+import { startPathWatcher } from "next-path-helper";
 
 if (process.env.NODE_ENV !== "production") {
-  startWatcher();
+  startPathWatcher();
 } else {
   console.log("Watcher not started in production environment");
 }

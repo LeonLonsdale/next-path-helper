@@ -371,6 +371,7 @@ export class PathManager {
     const appDirPath = this.locateAppDir(this.getProjectRoot());
     console.log("***** Path Manager *****");
     if (appDirPath) {
+      this.paths = {};
       this.locateSubDirs(appDirPath, appDirPath);
       console.log("App router detected", appDirPath);
       console.log("Paths have been generated");
