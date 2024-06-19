@@ -1,6 +1,6 @@
 {
   "name": "next-path-helper",
-  "version": "0.1.2",
+  "version": "0.1.1b",
   "description": "Helper utility for managing paths in NextJS projects using app router",
   "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
