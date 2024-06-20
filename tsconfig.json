@@ -14,7 +14,7 @@
     "sourceMap": true,
     "rootDir": "./src",
     "declarationDir": "./types",
-    "emitDeclarationOnly": true
+    "emitDeclarationOnly": false
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.spec.ts"]
