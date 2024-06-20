@@ -365,13 +365,34 @@ export class PathManager {
   }
 
   /**
+   * Makes a navigation list based on the provided keys.
+   * @param keys - An array of path keys.
+   * @returns An array of navigation links in the order of the provided keys.
+   */
+  public makeNavList(keys: string[]): NavLink[] {
+    return keys
+      .map((key) => {
+        const pathInfo = this.paths[key];
+        if (pathInfo) {
+          return { label: pathInfo.label, path: pathInfo.path };
+        } else {
+          console.error(`Path '${key}' not found.`);
+          return null;
+        }
+      })
+      .filter((navLink): navLink is NavLink => navLink !== null);
+  }
+
+  /**
    * Builds the path list by locating the app directory and processing its subdirectories.
    */
   public buildPathList(): void {
     const appDirPath = this.locateAppDir(this.getProjectRoot());
     console.log("***** Path Manager *****");
     if (appDirPath) {
-      this.paths = {};
+      this.paths = {
+        home: { label: "Home", path: () => "/", navs: [], type: "static" },
+      };
       this.locateSubDirs(appDirPath, appDirPath);
       console.log("App router detected", appDirPath);
       console.log("Paths have been generated");

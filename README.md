@@ -21,11 +21,13 @@ Path Manager aims to make this easier in your NextJS Apps using the App Router. 
   - [Initial Setup](#initial-setup)
   - [Methods](#methods)
     - [addPath](#addpath)
+    - [updatePath](#updatepath)
     - [getPath](#getpath)
     - [getPaths](#getpaths)
     - [addNav](#addnav)
     - [removeNav](#removenav)
     - [getNavList](#getnavlist)
+    - [makeNavList](#makenavlist)
     - [buildPathList](#buildpathlist)
 - [Watcher](#watching-for-changes)
 
@@ -123,7 +125,7 @@ pathManager.addPathsToNav(keys: string[], nav: string): void
 - `keys`: An array of path keys.
 - `nav`: The navigation link to add.
 
-This function finds each path by its key and adds the specified nav link to each paths navs array. If a path key does not exist, an error message is logged.
+This function finds each path by its key and adds the specified nav link to each path's `navs` array. If a path key does not exist, an error message is logged.
 
 #### removeNav
 
@@ -145,6 +147,18 @@ pathManager.getNavList(keyword: string): NavLink[]
 ```
 
 - `keyword`: The keyword to match.
+
+#### makeNavList
+
+Creates a navigation list based on a specified order of keys.
+
+```typescript
+pathManager.makeNavList(keys: string[]): NavLink[]
+```
+
+- `keys`: An array of path keys.
+
+This function takes an array of path keys and returns an array of navigation links in the same order as the keys provided.
 
 #### buildPathList
 
@@ -179,6 +193,10 @@ console.log("All Paths:", allPaths);
 const mainNavItems = pathManager.getNavList("mainnav");
 console.log('Paths with "mainnav" in navs:', mainNavItems);
 
+// Create a navigation list based on a specified order of keys
+const customNavList = pathManager.makeNavList(["examplePath", "anotherPath"]);
+console.log("Custom Navigation List:", customNavList);
+
 // Remove navigation item from the path
 pathManager.removeNav("examplePath", "sidebar");
 console.log("Updated Path Info:", pathManager.getPath("examplePath"));
@@ -186,7 +204,53 @@ console.log("Updated Path Info:", pathManager.getPath("examplePath"));
 
 ## Watching for Changes
 
-You should be able to just run `npm run watchpath`
+1. Create a new file in the project root, along with your config files named `watch.js`.
+2. Paste this code:
+
+```typescript
+import { startPathWatcher } from "next-path-helper/dist/utils/watch.js";
+
+if (process.env.NODE_ENV !== "production") {
+  startPathWatcher();
+} else {
+  console.log("Watcher not started in production environment");
+}
+```
+
+3. Add a script into your package.json:
+
+```json
+scripts {
+  "watch": "node watch.js",
+}
+```
+
+4. Open up a terminal and `npm run watch`
+
+## How I like to use the package
+
+My personal preference for using the package is to create a `paths.ts` document in `__lib`.
+
+```typescript
+import { pathManager } from "next-path-helper";
+
+export const {
+  addPath,
+  getPath,
+  getPaths,
+  getNavList,
+  makeNavList,
+  updatePath,
+  addNav,
+  addPathsToNav,
+  buildPathList,
+} = pathManager;
+
+addPathsToNav(["home", "about", "account"], "main");
+
+export const navListOrdered = makeNavList(["home", "about", "account"]); // dictate the order of the links
+export const navListUnordered = getNavList("main");
+```
 
 ## License
 

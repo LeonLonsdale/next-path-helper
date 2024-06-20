@@ -132,6 +132,12 @@ export declare class PathManager {
      */
     getNavList(keyword: string): NavLink[];
     /**
+     * Makes a navigation list based on the provided keys.
+     * @param keys - An array of path keys.
+     * @returns An array of navigation links in the order of the provided keys.
+     */
+    makeNavList(keys: string[]): NavLink[];
+    /**
      * Builds the path list by locating the app directory and processing its subdirectories.
      */
     buildPathList(): void;
