@@ -29,6 +29,16 @@ export class PathManager {
   private paths: Record<string, PathInfo> = {};
 
   constructor() {
+    this.paths = {};
+    this.addPath = this.addPath.bind(this);
+    this.getPath = this.getPath.bind(this);
+    this.getPaths = this.getPaths.bind(this);
+    this.getNavList = this.getNavList.bind(this);
+    this.updatePath = this.updatePath.bind(this);
+    this.addNav = this.addNav.bind(this);
+    this.addPathsToNav = this.addPathsToNav.bind(this);
+    this.buildPathList = this.buildPathList.bind(this);
+    this.makeNavList = this.makeNavList.bind(this);
     // Automatically build the path list when the instance is created
     this.buildPathList();
   }
@@ -205,21 +215,21 @@ export class PathManager {
     });
   }
 
-  public getAppDir(): string | boolean {
+  public getAppDir = (): string | boolean => {
     const appDirPath = this.locateAppDir(this.getProjectRoot());
     if (appDirPath) {
       return appDirPath;
     } else {
       return false;
     }
-  }
+  };
 
   /**
    * Adds a path to the path manager.
    * @param key - The key for the path.
    * @param pathInfo - The information about the path.
    */
-  public addPath(key: string, pathInfo: PathInfo): void {
+  public addPath = (key: string, pathInfo: PathInfo): void => {
     // Check if the path already exists
     if (this.paths[key]) {
       throw new Error(`Path '${key}' already exists.`);
@@ -245,14 +255,14 @@ export class PathManager {
     }
 
     this.paths[key] = pathInfo;
-  }
+  };
 
   /**
    * Updates an existing path in the path manager.
    * @param key - The key for the path.
    * @param pathInfo - The new information about the path.
    */
-  public updatePath(key: string, pathInfo: PathInfo): void {
+  public updatePath = (key: string, pathInfo: PathInfo): void => {
     // Validate the pathInfo object
     if (typeof pathInfo.label !== "string") {
       throw new Error(`Invalid pathInfo object: 'label' should be a string.`);
@@ -273,31 +283,31 @@ export class PathManager {
     }
 
     this.paths[key] = pathInfo;
-  }
+  };
 
   /**
    * Retrieves the path information for a given key.
    * @param key - The key of the path.
    * @returns The path information, or undefined if not found.
    */
-  public getPath(key: string): PathInfo | undefined {
+  public getPath = (key: string): PathInfo | undefined => {
     return this.paths[key];
-  }
+  };
 
   /**
    * Retrieves all the paths managed by the path manager.
    * @returns The paths as a record of key-value pairs.
    */
-  public getPaths(): Record<string, PathInfo> {
+  public getPaths = (): Record<string, PathInfo> => {
     return this.paths;
-  }
+  };
 
   /**
    * Adds unique navigation links to a path.
    * @param key - The key of the path.
    * @param navs - The navigation links to add.
    */
-  public addNav(key: string, ...navs: string[]): void {
+  public addNav = (key: string, ...navs: string[]): void => {
     const pathInfo = this.paths[key];
 
     if (pathInfo) {
@@ -309,14 +319,14 @@ export class PathManager {
     } else {
       console.error(`Path '${key}' not found.`);
     }
-  }
+  };
 
   /**
    * Adds a navigation link to multiple paths.
    * @param keys - An array of path keys.
    * @param nav - The navigation link to add.
    */
-  public addPathsToNav(keys: string[], nav: string): void {
+  public addPathsToNav = (keys: string[], nav: string): void => {
     keys.forEach((key) => {
       const pathInfo = this.paths[key];
       if (pathInfo) {
@@ -327,14 +337,14 @@ export class PathManager {
         console.error(`Path '${key}' not found.`);
       }
     });
-  }
+  };
 
   /**
    * Removes navigation links from a path.
    * @param key - The key of the path.
    * @param nav - The navigation link to remove.
    */
-  public removeNav(key: string, nav: string): void {
+  public removeNav = (key: string, nav: string): void => {
     const pathInfo = this.paths[key];
 
     if (pathInfo) {
@@ -345,14 +355,14 @@ export class PathManager {
     } else {
       console.error(`Path '${key}' not found.`);
     }
-  }
+  };
 
   /**
    * Retrieves a list of navigation links that match a keyword.
    * @param keyword - The keyword to match.
    * @returns The list of matching navigation links.
    */
-  public getNavList(keyword: string): NavLink[] {
+  public getNavList = (keyword: string): NavLink[] => {
     const matches: NavLink[] = [];
 
     Object.entries(this.paths).forEach(([key, value]) => {
@@ -362,14 +372,14 @@ export class PathManager {
     });
 
     return matches;
-  }
+  };
 
   /**
    * Makes a navigation list based on the provided keys.
    * @param keys - An array of path keys.
    * @returns An array of navigation links in the order of the provided keys.
    */
-  public makeNavList(keys: string[]): NavLink[] {
+  public makeNavList = (keys: string[]): NavLink[] => {
     return keys
       .map((key) => {
         const pathInfo = this.paths[key];
@@ -381,12 +391,12 @@ export class PathManager {
         }
       })
       .filter((navLink): navLink is NavLink => navLink !== null);
-  }
+  };
 
   /**
    * Builds the path list by locating the app directory and processing its subdirectories.
    */
-  public buildPathList(): void {
+  public buildPathList = (): void => {
     const appDirPath = this.locateAppDir(this.getProjectRoot());
     console.log("***** Path Manager *****");
     if (appDirPath) {
@@ -404,7 +414,7 @@ export class PathManager {
       );
     }
     console.log("************************");
-  }
+  };
 }
 
 /**
